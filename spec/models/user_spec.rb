@@ -3,7 +3,7 @@ require 'spec_helper'
 
 RSpec.describe User, type: :model do
   let(:test_user) { User.new }
-  let(:test_user2) { User.new(name: 'test', password: '123456') }
+  let(:test_user2) { User.new(name: 'test', password: '123456', admin: false) }
 
   def initial_user_setup
     test_user.name = 'test'
@@ -54,6 +54,13 @@ RSpec.describe User, type: :model do
       initial_user_setup
       test_user.password = 'a' * 21
       expect(test_user.save).to eq(false)
+    end
+  end
+
+  describe "admin validations" do
+    it "check for presence" do
+      initial_user_setup
+      expect(test_user.save).to eq(false) 
     end
   end
 end
