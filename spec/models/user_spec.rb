@@ -3,7 +3,7 @@ require 'spec_helper'
 
 RSpec.describe User, type: :model do
   let(:test_user) { User.new }
-  let(:test_user2) { User.new(name: 'test', password: '123456', admin: false) }
+  let(:test_user2) { create(:user) }
 
   def initial_user_setup
     test_user.name = 'test'
