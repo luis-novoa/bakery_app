@@ -2,8 +2,8 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe User, type: :model do
-  let(:test_user) { User.new }
-  let(:test_user2) { create(:user) }
+  let(:test_user) { build(:test_user) }
+  let(:model_user) { create(:model_user) }
 
   def initial_user_setup
     test_user.name = 'test'
@@ -32,7 +32,6 @@ RSpec.describe User, type: :model do
 
     it "check for name's uniqueness" do
       initial_user_setup
-      test_user2.save
       expect(test_user.save).to eq(false)
     end
   end
