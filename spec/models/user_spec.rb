@@ -12,4 +12,5 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_length_of(:password).is_at_least(6).is_at_most(20) }
 
   it { is_expected.to validate_presence_of(:admin) }
+  it { is_expected.to validate_inclusion_of(:admin).in_array(%w[super admin user])}
 end
