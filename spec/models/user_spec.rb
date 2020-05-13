@@ -19,7 +19,7 @@ RSpec.describe User, type: :model do
   it { is_expected.to validate_presence_of(:admin) }
   it { is_expected.to validate_inclusion_of(:admin).in_array(%w[super admin user])}
 
-  describe "encrypted password" do
+  describe ".encrypted_password" do
     let(:model) { create(:model_user) }
     let(:test) { build(:test_user) }
 
