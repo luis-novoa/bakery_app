@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'spec_helper'
 
 RSpec.describe User, type: :model do
-  subject { build(:user) } 
+  subject { build(:test_user) } 
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_uniqueness_of(:name).case_insensitive }
@@ -13,4 +13,17 @@ RSpec.describe User, type: :model do
 
   it { is_expected.to validate_presence_of(:admin) }
   it { is_expected.to validate_inclusion_of(:admin).in_array(%w[super admin user])}
+
+  describe "encrypted password" do
+    let(:model) { create(:model_user) }
+    let(:test) { build(:test_user) }
+
+    it "is unique" do
+      test.password = model.password
+      test.save
+      expect(test.encrypted_password).to_not eq(model.encrypted_password)
+    end
+    
+  end
+  
 end
