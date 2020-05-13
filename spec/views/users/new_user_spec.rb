@@ -11,7 +11,28 @@ RSpec.describe 'new_user_registration', type: :feature do
     it { is_expected.to have_field('user_password')}
   end
 
-  context "succesful registration" do
+  context "unsuccessful registration" do
+    let(:test_user) { build(:test_user) }
+    before(:each) { visit new_user_registration_path }
+
+    it "don't create user" do
+      click_on 'Sign up'
+      expect(User.count).to eq(0) 
+    end
+    
+    it "display warnings" do
+      click_on 'Sign up'
+      expect(page).to have_selector('#error_explanation') 
+    end
+
+    it "returns to the same path" do
+      click_on 'Sign up'
+      expect(current_path).to eq(new_user_registration_path)
+    end
+    
+  end
+
+  context "successful registration" do
     let(:test_user) { build(:test_user) }
     before(:each) { visit new_user_registration_path }
 
@@ -41,7 +62,7 @@ RSpec.describe 'new_user_registration', type: :feature do
       expect(current_user.admin).to eq('super') 
     end
     
-    it "next new users is are regular users" do
+    it "next new users are regular users" do
       create(:model_user)
       submit_form
       current_user = User.find_by(name: test_user.name)
