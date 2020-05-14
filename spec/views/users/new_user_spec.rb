@@ -27,6 +27,7 @@ RSpec.describe 'new_user_registration', type: :feature do
 
     it "returns to the same path" do
       click_on 'Sign up'
+      visit current_path
       expect(current_path).to eq(new_user_registration_path)
     end
     
